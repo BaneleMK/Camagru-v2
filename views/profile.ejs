@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Trender-Profile</title>
+        <link rel="stylesheet" href="/assets/mystyles.css">      
+    </head>
+    <body bgcolor=red>
+        <nv>
+            <nvli style="float: left;"><a href="/">Home</a></nvli>
+            <% 
+                if (!user)
+                {%>
+                    <nvli><a href="/auth/signup">Sign up</a></nvli>
+                    <nvli><a href="/auth/login">Login</a></nvli>';
+                <%}
+                else
+                {%>
+                    <nvli><a href="/auth/logout">Logout</a></nvli>
+                    <nvli><a href="/user/post">Post</a></nvli>
+                    <nvli><a href="/user/viewposts/0">View Posts</a></nvli>
+                    <nvli><a class=active href="/profile"><%= user.username %></a></nvli>';
+                <%}
+            %>
+        </nv>
+        <div class="mainbox">
+            <div class="subbox">
+                    
+                <div class="picbox">
+                    <div class="formflexbox" style="width:55%; height:600px; background-color: #FFFFFF">
+                        <form action="/profile/username" method="POST">
+                            <hr/>
+                            <table class=table>
+                                <tr>
+                                    <td>new username:</td>
+                                    <td><input type="text" name="newusername" pattern="[a-zA-Z]{3,20}" title="3 to 20 alphabets" required></td>
+                                </tr>
+                                <tr>
+                                    <td>password:</td>
+                                    <td><input type="password" name="password" required></td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                        <form action="/profile/password" method="POST">
+                            <hr/>
+                            <table class=table>
+                                <tr>
+                                    <td>old password:</td>
+                                    <td><input type="password" name="oldpassword" required></td>
+                                </tr>
+                                <tr>
+                                    <td>new password:</td>
+                                    <td><input type="password" name="newpassword" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" title="password must have alteast 8 characters, one capital and small letter, a number and an optional special character" required></td>
+                                </tr>
+                                <tr>
+                                    <td>new password verification:</td>
+                                    <td><input type="password" name="newpassword_vr" required></td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                        <form action="/profile/email" method="POST">
+                            <hr/>
+                            <table class=table>
+                                <tr>
+                                    <td>new email:</td>
+                                    <td><input type="text" name="newemail" pattern="[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}" title="please insert a normal email format" required></td>
+                                </tr>
+                                <tr>
+                                    <td>password:</td>
+                                    <td><input type="password" name="password" required></td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                        <form action="/profile/comments" method="POST">
+                            <hr/>
+                            <table class=table>
+                                <tr>
+                                    <td>email comment notification:</td>
+                                    <td>
+                                        <select name="e_notification">
+                                            <option value=true>ON</option>
+                                            <option value=false>OFF</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                        </div>
+                        </div>
+                        <?php
+                            include '../messages/phpboxmessages.php';
+                        ?>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </body>
+</html>

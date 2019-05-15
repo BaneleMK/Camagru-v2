@@ -1,0 +1,64 @@
+<?php
+
+session_start();
+
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Trender-MyPosts</title>
+        <link rel="stylesheet" href="/assets/mystyles.css">        
+    </head>
+    <body>
+        <nv>
+            <nvli style="float: left;"><a class=active href="index.php">Home</a></nvli>
+            <% 
+                if (!user)
+                {%>
+                    <nvli><a href="/auth/signup">Sign up</a></nvli>
+                    <nvli><a href="/auth/login">Login</a></nvli>
+                <%}
+                else
+                {%>
+                    <nvli><a href="/auth/logout">Logout</a></nvli>
+                    <nvli><a href="/user/post">Post</a></nvli>
+                    <nvli><a href="/user/viewposts/0">View Posts</a></nvli>
+                    <nvli><a class=active href="/profile"><%= user.username %></a></nvli>
+                <%}
+            %>
+        </nv>
+        <div class="mainbox">
+            <div class="subbox">
+                <!--<div class="optionbox">
+                    
+                </div>-->
+                    <%
+                        var nextpage = page + 1;
+                        var prevpage = page - 1;
+                        var pagemin = page * 5;
+                        var pagemax = pagemin + 5;
+                    %>
+                    <div class="columnflexbox">
+                    <%
+                        for(i = pagemin; posts[i] && i != pagemax; i++) { %>
+                            <div class="postflexbox">
+                                    <img src=<%= posts[i].image %>>
+                                    <div class="postoptionsflexbox">
+                                        <options><flextext><%= user.username %></flextext></options>
+                                    </div>
+                            </div>
+                        <% }
+                    %>
+
+                            <div class="postoptionsflexbox">
+                                
+                                <options><flextext><a href=/user/viewposts/0>First</a></flextext></options>
+                                <options><flextext><a href=/user/viewposts/<%=prevpage%>>Back</a></flextext></options>
+                                <options><flextext><%=page%></flextext></options>
+                                <options><flextext><a href=/user/viewposts/<%=nextpage%>>next</a></flextext></options>
+                            </div>
+                    </div>
+            </div>   
+        </div>
+    </body>
+</html>

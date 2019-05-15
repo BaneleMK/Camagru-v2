@@ -1,0 +1,345 @@
+    .form{
+        background-color: white;
+    }
+    
+    /* FLEXBOXES */
+    .mainbox{
+        display: flex;
+        flex-direction: column;            
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100%;
+        padding-top:20px;
+        margin-top:30px;
+    }
+    
+    .subbox{
+        border-radius: 5px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #FFFFFF;
+        flex-direction: row;
+        width: 84%;
+        height: 920px;
+        align-items: center;
+        justify-content: center;
+        float: left;
+    }
+
+    .formflexbox{
+        border-radius: 5px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #CCCCCC;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 45%;
+        height: 30%;
+        align-items: center;
+        justify-content: center;
+        float: left;
+        overflow-y: auto;
+    }
+
+    .failflexbox{
+        border-radius: 5px;
+        margin-top:30px;
+        border: #000000 solid 5px;
+        display: flex;
+        background-color: #FFFFFF;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 35%;
+        height: 30%;
+        align-items: center;
+        justify-content: center;
+        float: left;
+        overflow-y: auto;
+    }
+
+    .passflexbox{
+        border-radius: 5px;
+        margin-top:30px;
+        border: #000000 solid 5px;
+        display: flex;
+        background-color: #77FF77;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 35%;
+        height: 30%;
+        align-items: center;
+        justify-content: center;
+        float: left;
+        overflow-y: auto;
+    }
+ 
+    .tipflexbox{
+        border-radius: 5px;
+        margin-top:30px;
+        border: #000000 solid 2px;
+        display: flex;
+        background-color: rgb(27, 255, 244);
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 30%;
+        height: 20%;
+        align-items: center;
+        justify-content: center;
+        float: left;
+        overflow-y: auto;
+    }
+
+    .camtopflexbox{
+        text-align: center;
+        color: #FFFFFF;
+        border-radius: 1px;
+        display: flex;
+        border: red solid thin;
+        background-color: #000;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 90%;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        float: left;
+    }
+
+    .cammidflexbox{
+        border-radius: 1px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #CCCCCC;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 90%;
+        height: 400px;
+        align-items: center;
+        justify-content: center;
+        float: left;
+    }
+
+    .separationflexbox{
+        border-radius: 1px;
+        border: #000 solid thin;
+        display: flex;
+        background-color: #FFFFFF;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 48%;
+        height: 400px;
+        align-items: center;
+        justify-content: center;
+        float: left;
+    }
+    
+    .stickerflexbox{
+        border-radius: 1px;
+        border: #000 solid thin;
+        display: flex;
+        background-color: #FFFFFF;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 500px;
+        align-items: center;
+        justify-content: center;
+        float: left;
+        overflow-y: auto;
+    }
+
+    .cambotflexbox{
+        border-radius: 1px;
+        border: red solid thin;
+        display: flex;
+        background-color: #000;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 90%;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        float: left;
+    }
+    .thumbnailflexbox{
+        border-radius: 1px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #AAAAAA;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 90%;
+        height: 70px;
+        align-items: center;
+        justify-content: center;
+        overflow-x: auto;
+        border-radius: 1px;
+        float: left;
+    }
+
+    .campicflexbox{
+        border-radius: 1px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #CCCCCC;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 90%;
+        height: 350px;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+        border-radius: 1px;
+        float: left;
+    }
+
+    .picbox{
+        border-radius: 5px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #CCCCCC;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 75%;
+        height: 900px;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+    }
+    
+    .commentflexbox{
+        border-radius: 5px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #FFFFFF;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 90%;
+        height: 170px;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+    }
+
+    .columnflexbox {
+        align-items: center;
+        flex: 25%;
+        max-width: 75%;
+        /*padding: 4px;*/
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(110, 0, 0);
+        overflow-y: auto;
+        height: 900px;
+    }
+    
+    .postflexbox{
+        border: #25323b solid thin;
+        padding: 4px;
+        align-items: center;
+        justify-content: center;
+        background-color: #FFFFFF;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 80%;
+        align-items: center;
+        float: left;
+    }
+    
+    .postflexbox img{
+        margin-top: 8px;
+        vertical-align: middle;
+        width: 100%;
+    }
+
+    .postoptionsflexbox {
+        border: #25323b solid thin;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .postoptionsflexbox options{
+        border-radius: 10px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: #AAAAAA;
+        width: 30%;
+        text-align: center;
+    }
+
+    @media screen and (min-width: 400px) {
+        flextext{
+        text-align: center;
+        font-size: 15px;
+        }
+      }
+
+    .optionbox{
+        /*border-radius: 5px;
+        border: #25323b solid thin;*/
+        display: flex;
+        background-color: #AAAAAA;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 23%;
+        height: 900px;
+        float: left;
+    }
+
+    nvcam {
+        list-style-type: none;
+        overflow: hidden;
+        background-color: rgb(0, 0, 0);
+        width: 100%;
+    }
+
+    nv {
+        list-style-type:  none;
+        /*margin: 0;*/
+        /*padding: 0;*/
+        overflow: auto;
+        background-color: rgb(36, 36, 36);
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+    
+    nvli {
+        float: right;
+    }
+
+    nvli a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    body{
+        font-family: Arial;
+        background-image: linear-gradient(to right, red, maroon);
+        background-size: 100%;
+        margin: 0 auto;
+        /*background-image: linear-gradient(gray, white);*/
+    }
+
+    nvli a:hover {
+        color: red;
+        background-color: white;
+    }
+
+    .active {
+        color: red;
+        background-color: Black;
+    }
+
+    table{
+        align-content : center;
+        width: 95%;
+        height: 95%;
+    }
