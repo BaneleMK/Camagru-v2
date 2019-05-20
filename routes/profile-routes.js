@@ -79,6 +79,7 @@ router.post('/:type', urlencodedParser, (req, res) =>{
                     });
                 } else{
                     console.log('user invalid? impossible outcome');
+                    res.send('404 SOMETHING WENT WRONG');
                 }
             });
         }

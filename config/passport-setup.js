@@ -46,9 +46,6 @@ passport.use(
                     email: email,
                     password: "none",
                 }).save().then((newuser) => {
-                    console.log('googleid = ' + currentUser.id + 'mongo profile id =' + profile.id);
-                    console.log('new user created with info: ' + newuser)
-
                     // right here we are putting the users information in a cookie (like a php session)
                     done(null, newuser);
                 });

@@ -24,27 +24,29 @@
         </nv>
         <div class="mainbox">
             <div class="subbox">
-                <!--<div class="optionbox">
-                    
-                </div>-->
+                <%
+                        var nextpage = page + 1;
+                        var prevpage = page - 1;
+                    %>
                     <div class="columnflexbox">
                     <%
-                        for(i = pagemin; posts[i]; i++) { %>
+                        for(i = 0; posts[i]; i++) { %>
                             <div class="postflexbox">
                                     <img src=<%= posts[i].image %>>
                                     <div class="postoptionsflexbox">
-                                        <options><flextext><%= user.username %></flextext></options>
+                                        <options><flextext><a href="/user/commentnlike/<%= posts[i]._id %>/view">comments and like</a></flextext></options>
                                     </div>
                             </div>
                         <% }
                     %>
 
-                        <div class="postoptionsflexbox">
-                            <options><flextext><a href=/gallery/0>First</a></flextext></options>
-                            <options><flextext><a href=/gallery/<%=prevpage%>>Back</a></flextext></options>
-                            <options><flextext><%=page%></flextext></options>
-                            <options><flextext><a href=/gallery/<%=nextpage%>>next</a></flextext></options>
-                        </div>
+                            <div class="postoptionsflexbox">
+                                
+                                <options><flextext><a href=/gallery/0>First</a></flextext></options>
+                                <options><flextext><a href=/gallery/<%=prevpage%>>Back</a></flextext></options>
+                                <options><flextext><%=page%></flextext></options>
+                                <options><flextext><a href=/gallery/<%=nextpage%>>next</a></flextext></options>
+                            </div>
                     </div>
             </div>
             </div>   

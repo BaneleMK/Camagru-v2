@@ -2,58 +2,46 @@
 <html>
     <head>
         <title>Trender-comments</title>
-        <link rel="stylesheet" href="../css/mystyles.css">
-        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/assets/mystyles.css">        
     </head>
-    <body bgcolor=red>
+    <body>
         <nv>
-            <nvli style="float: left;"><a href="../index.php">Home</a></nvli>
+            <nvli style="float: left;"><a class=active href="index.php">Home</a></nvli>
             <% 
-            if (!user)
-            {%>
-                <nvli><a href="/auth/signup/signup">Sign up</a></nvli>
-                <nvli><a href="/auth/login/login">Login</a></nvli>';
-            <%}
-            else
-            {%>
-                <nvli><a href="/auth/logout">Logout</a></nvli>
-                <nvli><a href="/user/post">Post</a></nvli>
-                <nvli><a href="/user/viewposts">View Posts</a></nvli>
-                <nvli><a class=active href="profile.php">' . $_SESSION['username'] . '</a></nvli>';
-            <%}
+                if (!user)
+                {%>
+                    <nvli><a href="/auth/signup">Sign up</a></nvli>
+                    <nvli><a href="/auth/login">Login</a></nvli>';
+                <%}
+                else
+                {%>
+                    <nvli><a href="/auth/logout">Logout</a></nvli>
+                    <nvli><a href="/user/post">Post</a></nvli>
+                    <nvli><a href="/user/viewposts/0">View Posts</a></nvli>
+                    <nvli><a class=active href="/profile"><%= user.username %></a></nvli>';
+                <%}
             %>
         </nv>
         <div class="mainbox">
             <div class="subbox">
                     
                 <div class="picbox">
-                <?php
-                    if (isset($_GET['post'])){
-                        require_once('../config/setup.php');
-                        
-                        $post = $_GET['post'];
-
-                        $stmt = $conn->prepare("SELECT * FROM posts WHERE id = $post ");
-                        $stmt->execute();
-
-                        $row = $stmt->fetch();
-                        echo '
                         <div class="postflexbox">
                             <table>
                                 <tr>
-                                    <td colspan=2><img src="../uploads/' . $row['picture'] . '" class="postimages" </td>
+                                    <td colspan=2><img src="<%=post.image%>" class="postimages" </td>
                                 </tr>
                                 <tr>
-                                    <td>@' . $row['username'] . ' </td>
+                                    <td><%=post_creator%></td>
                                 </tr>
                                 <tr>
-                                    <td>' . $row['likes'] . ' <a href="likeinfo.php?post=' . $_GET['post'] . '&like ">Likes</a></td>
-                                    <td>' . $row['comments'] . '<a href="comments.php?post=' . $row['id'] . '">' . ' Comments </td>
+                                    <td><%=post.likes.length%> <a href="/user/commentnlike/<%= post._id %>/like">Likes</a></td>
+                                    <td><%=post.comments.length%> Comments</td>
                                 </tr>
                             </table>
                         </div>
                         <div class="commentflexbox">
-                            <form action="commentinfo.php?post=' . $row['id'] . '&comments " method=POST id="commentform" accept-charset="UTF-8">
+                            <form action="/user/commentnlike/<%= post._id %>/comment" method=POST id="commentform" accept-charset="UTF-8">
                                     <table class=table>
                                             <tr>
                                                 <td><h3>Comment</h3></td>
@@ -65,23 +53,13 @@
                                     </table>
                             </form>
                         </div>';
-
-                        $stmt = $conn->prepare("SELECT * FROM user_comments WHERE postid = $post");
-                        $stmt->execute();
-
-                        echo '
-                        <div class="commentflexbox" style="height:650">';
-                        while ($com = $stmt->fetch()) {
-                            echo '<div class="commentflexbox" style="height:50px ; width:90%; background-color: #EEEEEE;">
-                        ' . $com['username'] . ': ' . $com['comment_text'] . '
-                            </div>';
-                        }
-                        echo '</div>';
-                    } else {
-                        header("Location : ../index.php");
-                        exit();
-                    }
-                ?>
+                        <div class="commentflexbox" style="height:650">
+                        <% for(i = 0; post.comments[i]; i++){
+                            %><div class="commentflexbox" style="height:50px ; width:90%; background-color: #EEEEEE;">
+                                <%=names[i]%> : <%=post.comments[i].comment%>
+                            </div>
+                            <%}%>
+                        </div>
                 </div>
             </div>   
         </div>

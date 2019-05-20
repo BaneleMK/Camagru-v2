@@ -1,0 +1,17 @@
+to do's for today
+
+Version 1.0.1
+
+Login:
+* added registered component in database
+* made verification emails functional
+------
+user-information manipulation
+* Profile page added
+* password, username, and email can be modified for user (if not logged in by google)
+
+
+version 1.0.2
+Login
+* bearer strategy added for OAuth
+------
