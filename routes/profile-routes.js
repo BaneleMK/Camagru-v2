@@ -30,7 +30,6 @@ router.post('/:type', urlencodedParser, (req, res) =>{
                 res.send('username already in use');
             } else {
                 User.findOne({username: req.user.username}).then(function(currentUser){
-                    console.log(currentUser);
                     if (currentUser){                
                         bcrypt.compare(req.body.password, currentUser.password, function(err, result){
                             if (result) {

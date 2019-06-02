@@ -46,7 +46,6 @@ passport.use(
                     email: email,
                     password: "none",
                 }).save().then((newuser) => {
-                    // right here we are putting the users information in a cookie (like a php session)
                     done(null, newuser);
                 });
             } else {
@@ -85,3 +84,14 @@ passport.use(new LocalStrategy(
         });
     })
 );
+
+/*
+passport.use(new BearerStrategy(
+    function(token, done) {
+      User.findOne({ token: token }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        return done(null, user, { scope: 'read' });
+      });
+    }
+));*/

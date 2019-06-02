@@ -25,33 +25,13 @@ router.post('/login', urlencodedParser,
     passport.authenticate('local', { failureRedirect: '/auth/login' }), (req, res) =>{
     console.log(req.body)
     res.redirect('/');
-    
-    // validate user
 
-    /*User.findOne({ username: req.body.username}).then(function(currentUser){
-        console.log(currentUser);
-        if (currentUser){
+});
 
-            bcrypt.compare(req.body.password, currentUser.password, function(err, result){
-                if (result) {
-                    console.log('USER FOUND AND MATCHED, current user id:' + currentUser.id);
-                    passport.serializeUser((currentUser, done)=> {
-                        // the 1st param is for errors but was set to null due to knowing that user will always be available when called on
-                        // since we pass it in
-                        done(null, currentUser.id);
-                    });
-                    res.redirect('/');
-                } else {
-                    res.send('Who You Tryna Scam Punk?...maybe you made a mistake tyagain');
-                }
-            });
-        } else{
-            res.send('dis user dont exist bruduh');
-        }
-    });*/
-
-    // redirect them to home
-    // res.render('home', {user: req.user});
+router.post('/login/bearer', urlencodedParser, 
+    passport.authenticate('token-bearer', { failureRedirect: '/auth/login' }), (req, res) =>{
+    console.log(req.body)
+    res.redirect('/');
 });
 
 router.get('/signup', (req, res) =>{
@@ -59,63 +39,45 @@ router.get('/signup', (req, res) =>{
     res.render('signup');
 });
 
+router.post('/forgotpass', urlencodedParser, (req, res) =>{
+    var email = req.body.email;
+    var code = Math.random();
 
-router.get('/sendmail', urlencodedParser, (req, res) =>{
-// async..await is not allowed in global scope, must use a wrapper
-async function main(){
-
-        var code = Math.random();
-        console.log('the code nuimber is ' + "code");
-        var email_message = "\
-            hello dear user\
-            \
-            So i need you to follow this link in order for me to to verify your account http://localhost:9000/auth/emailverif/"+ req.body.username +"/" + code;
-
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    // let testAccount = await nodemailer.createTestAccount();
-  
-    // create reusable transporter object using the default SMTP transport
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-          user: key.gmailemail.email,
-          pass: key.gmailemail.password,
-      },
-      /*tls: {
-        rejectUnauthorized: false
-      }*/
-  });
-  
-    // send mail with defined transport object
-    console.log("Transporter made");
-    let mailOptions = {
-      from: 'thybaneard@gmail.com', // sender address
-      to: 'carpool@mailinator.com', // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: email_message, // plain text body
-    };
-    
-    transporter.sendMail(mailOptions, function(err, data){
-        if (err){
-            console.log(err);
+    User.updateOne({email: email}, {code: code}).then((result) =>{
+        if (result){
+                var email_message = "Hey there\
+                            \
+                A password reset was requested for your account,\
+                if this was not you ignore this email.\
+                \
+                To reset your password follow the following link:\
+                http://localhost:9000/auth/verifypassreset/"+req.body.email+"/"+code+"\
+                \
+                Tank you for using this site.\
+                The Boss.";
+        
+                
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                  auth: {
+                    user: key.gmailemail.email,
+                    pass: key.gmailemail.password,
+                  },
+                });
+        
+                transporter.sendMail({
+                    from: 'thybaneard@gmail.com', // sender address
+                    to: email, // list of receivers
+                    subject: "Trender password reset", // Subject line
+                    text: email_message, // plain text body
+                });
         } else {
-            console.log('email sent go check i bet its not there lol');
+            res.redirect('/');
         }
     });
-  
-    //console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-  
-    // Preview only available when sending through an Ethereal account
-    //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-  }
-  
-      main().catch(console.error);
-    res.send('Check mail');
 
-});
+    res.render('forgotpassword', {user: req.user});
+})   
 
 router.post('/signup', urlencodedParser, (req, res) =>{
     console.log(req.body)
@@ -210,6 +172,62 @@ router.get('/logout', (req, res) =>{
     res.redirect('/');
 });
 
+router.get('/forgotpassword', (req, res) =>{
+
+    res.render('forgotpassword', {user: req.user});
+})                         
+
+router.get('/verifypassreset/:email/:code', (req, res) =>{
+    var email = req.params.email;
+    var code = req.params.code;
+
+    console.log('i made it back yey...what next? email is '+email+' code is '+code);
+
+    User.findOne({email: email, code: code}).then((result) => {
+        if (result){
+            res.render('resetpassword', {code: code, email: email, no_password_match: false});
+        } else {
+            res.redirect('/');
+        }
+    });
+})
+
+router.post('/verifypassreset/:email/:code', urlencodedParser, (req, res) =>{
+    var email = req.params.email;
+    var code = req.params.code;
+    var password = req.body.password;
+    var password_vr = req.body.password_vr;
+
+    console.log('i made it back yey...what next? email is '+email+' code is '+code);
+
+    User.findOne({email: email, code: code}).then((result) => {
+        if (result){
+            if (password != password_vr){
+                res.render('resetpassword', {code: code, email: email, no_password_match: true});
+            } else {
+                bcrypt.hash(password, 10, (err, newpass) => {
+                    if (err)
+                        res.redirect('/')
+                    else {
+                        var code = Math.random();
+                        User.findOneAndUpdate({email: email}, {password: newpass, code: code}).then((result) => {
+                            if (result){
+                                console.log('password change complete :'+result);
+                                req.logOut();
+                                res.redirect('/auth/login');
+                            } else {
+                                res.redirect('/');
+                            }
+                        });
+                    }
+                });
+            }
+        } else {
+            res.redirect('/');
+        }
+    });
+})   
+
 router.get('/emailverif/:user/:code', (req, res) =>{
 
 
@@ -226,7 +244,6 @@ router.get('/emailverif/:user/:code', (req, res) =>{
                     console.log('verifying you now...');
                     res.render('login', {state: 'verified'});
                 });
-                //res.send('something went wrong for some reason with updating your status');
             } else {
                 console.log('Already verified friend see [Status : '+ result.verified+' ]');
                 res.render('login', {state: 'verified'});
@@ -236,8 +253,6 @@ router.get('/emailverif/:user/:code', (req, res) =>{
             res.render('home');
         }
     });
-
-    //res.send('back from mail');                               
 })                                                                ;
 
 // google auth route
@@ -246,11 +261,8 @@ router.get('/google', passport.authenticate('google', {
 }));
 
 // callback route for google to redirect to
-
 router.get('/google/redirect', passport.authenticate('google'), (req, res) =>{
-    //res.send(req.user);
     res.redirect('/');
 });
-
 //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 module.exports = router;

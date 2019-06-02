@@ -8,6 +8,7 @@ const UserSchema = new Schema({
     email: String,
     code: Number,
     verified: Boolean,
+    token: String,
     e_notification: Boolean,
 });
 

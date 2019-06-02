@@ -45,7 +45,7 @@ session_start();
                                     <img src=<%= posts[i].image %>>
                                     <div class="postoptionsflexbox">
                                         <options><flextext><%= user.username %></flextext></options>
-                                        <options><flextext><a href="/user/viewposts/delete/<%=posts[i]._id%>">delete post</a></flextext></options>
+                                        <options><flextext><a href="/user/viewposts/delete/<%=posts[i]._id%>/<%=page%>">delete post</a></flextext></options>
                                     </div>
                             </div>
                         <% }
