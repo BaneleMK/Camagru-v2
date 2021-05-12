@@ -22,7 +22,7 @@
     "mocha": "^6.1.4",
     "mongoose": "^5.5.0",
     "multer": "^1.4.1",
-    "nodemailer": "^6.1.1",
+    "nodemailer": "^6.4.16",
     "oauth2orize": "^1.11.0",
     "passport": "^0.4.0",
     "passport-bearer-strategy": "^1.0.1",
